@@ -30,7 +30,9 @@ export const Column = ({ listId, listName, cards, index, onRemoveList }: Props) 
   }
 
   const handleCreateCard = (cardName: string): void => {
-    socket.emit(CardEvent.CREATE, listId, cardName);
+    if(cardName){
+      socket.emit(CardEvent.CREATE, listId, cardName);
+    }
   }
 
   return (
