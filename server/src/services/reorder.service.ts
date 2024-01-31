@@ -64,6 +64,24 @@ export class ReorderService {
     );
   }
 
+  public renameCard<T>(lists: List[], cardId: string, newName: string):List[] {
+    return lists.map(list => {
+       list.cards.forEach(card => {
+        card.id === cardId ? card.setName(newName) : card
+      });
+      return list
+    })
+  }
+
+   public changeDescription<T>(lists: List[], cardId: string, text: string): List[] {
+    return lists.map(list => {
+       list.cards.forEach(card => {
+        card.id === cardId ? card.setDescription(text) : card
+      });
+      return list
+    })
+  }
+
   private remove<T>(items: T[], index: number): T[] {
     return [...items.slice(0, index), ...items.slice(index + 1)];
   }

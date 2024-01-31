@@ -8,16 +8,15 @@ export class CardHandler extends SocketHandler {
   public handleConnection(socket: Socket): void {
     socket.on(CardEvent.CREATE, this.createCard.bind(this));
     socket.on(CardEvent.REORDER, this.reorderCards.bind(this));
+    socket.on(CardEvent.RENAME, this.renameCard.bind(this));
+    socket.on(CardEvent.CHANGE_DESCRIPTION, this.changeDescription.bind(this));
   }
 
   public createCard(listId: string, cardName: string): void {
     const newCard = new Card(cardName, '');
     const lists = this.db.getData();
 
-    const updatedLists = lists.map((list) =>
-      list.id === listId ? list.setCards(list.cards.concat(newCard)) : list,
-    );
-
+    const updatedLists = this.reorderService.createCard(lists, listId, newCard);
     this.db.setData(updatedLists);
     this.updateLists();
   }
@@ -42,6 +41,20 @@ export class CardHandler extends SocketHandler {
       destinationListId,
     });
     this.db.setData(reordered);
+    this.updateLists();
+  }
+
+  private renameCard(cardId: string, newName: string): void {
+    const lists = this.db.getData();
+    const updatedLists = this.reorderService.renameCard(lists, cardId, newName)
+    this.db.setData(updatedLists);
+    this.updateLists();
+  }
+  
+  private changeDescription(cardId: string, text: string): void {
+    const lists = this.db.getData();
+    const updatedLists = this.reorderService.changeDescription(lists, cardId, text)
+    this.db.setData(updatedLists);
     this.updateLists();
   }
 }
