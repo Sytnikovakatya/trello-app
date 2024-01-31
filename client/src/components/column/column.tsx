@@ -5,7 +5,7 @@ import type {
 } from '@hello-pangea/dnd';
 import { Draggable } from '@hello-pangea/dnd';
 
-import { ListEvent } from "../../common/enums";
+import { CardEvent, ListEvent } from "../../common/enums";
 import type { Card } from '../../common/types';
 import { CardsList } from '../card-list/card-list';
 import { DeleteButton } from '../primitives/delete-button';
@@ -15,7 +15,6 @@ import { Footer } from './components/footer';
 import { socket } from "../../context/socket";
 import { Container } from './styled/container';
 import { Header } from './styled/header';
-
 
 type Props = {
   listId: string;
@@ -28,6 +27,10 @@ type Props = {
 export const Column = ({ listId, listName, cards, index, onRemoveList }: Props) => {
   const handleRenameList = (newName: string): void =>{
     socket.emit(ListEvent.RENAME, listId, newName);
+  }
+
+  const handleCreateCard = (cardName: string): void => {
+    socket.emit(CardEvent.CREATE, listId, cardName);
   }
 
   return (
@@ -62,7 +65,7 @@ export const Column = ({ listId, listName, cards, index, onRemoveList }: Props) 
             }}
             cards={cards}
           />
-          <Footer onCreateCard={() => {}} />
+          <Footer onCreateCard={handleCreateCard} />
         </Container>
       )}
     </Draggable>
