@@ -5,14 +5,17 @@ import type {
 } from '@hello-pangea/dnd';
 import { Draggable } from '@hello-pangea/dnd';
 
+import { ListEvent } from "../../common/enums";
 import type { Card } from '../../common/types';
 import { CardsList } from '../card-list/card-list';
 import { DeleteButton } from '../primitives/delete-button';
 import { Splitter } from '../primitives/styled/splitter';
 import { Title } from '../primitives/title';
 import { Footer } from './components/footer';
+import { socket } from "../../context/socket";
 import { Container } from './styled/container';
 import { Header } from './styled/header';
+
 
 type Props = {
   listId: string;
@@ -23,6 +26,10 @@ type Props = {
 };
 
 export const Column = ({ listId, listName, cards, index, onRemoveList }: Props) => {
+  const handleRenameList = (newName: string): void =>{
+    socket.emit(ListEvent.RENAME, listId, newName);
+  }
+
   return (
     <Draggable draggableId={listId} index={index}>
       {(provided: DraggableProvided, snapshot: DraggableStateSnapshot) => (
@@ -39,7 +46,7 @@ export const Column = ({ listId, listName, cards, index, onRemoveList }: Props) 
             <Title
               aria-label={listName}
               title={listName}
-              onChange={() => {}}
+              onChange={handleRenameList}
               fontSize="large"
               width={200}
               isBold
