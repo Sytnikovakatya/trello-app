@@ -16,16 +16,17 @@ type Props = {
   card: Card;
   isDragging: boolean;
   provided: DraggableProvided;
+  onRemoveCard: () => void;
 };
 
-export const CardItem = ({ card, isDragging, provided }: Props) => {
-  const handleRenameTitle = (newName:string) => {
+export const CardItem = ({ card, isDragging, provided, onRemoveCard }: Props) => {
+  const handleRenameTitle = (newName: string) => {
     socket.emit(CardEvent.RENAME, card.id, newName);
-  }
+  };
 
   const handleChangeText = (text: string) => {
     socket.emit(CardEvent.CHANGE_DESCRIPTION, card.id, text);
-  }
+  };
   return (
     <Container
       className="card-container"
@@ -46,7 +47,7 @@ export const CardItem = ({ card, isDragging, provided }: Props) => {
         />
         <Text text={card.description} onChange={handleChangeText} />
         <Footer>
-          <DeleteButton onClick={() => {}} />
+          <DeleteButton onClick={onRemoveCard} />
           <Splitter />
           <CopyButton onClick={() => {}} />
         </Footer>
