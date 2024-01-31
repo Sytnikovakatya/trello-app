@@ -73,13 +73,20 @@ export class ReorderService {
     })
   }
 
-   public changeDescription<T>(lists: List[], cardId: string, text: string): List[] {
+  public changeDescription<T>(lists: List[], cardId: string, text: string): List[] {
     return lists.map(list => {
        list.cards.forEach(card => {
         card.id === cardId ? card.setDescription(text) : card
       });
       return list
     })
+  }
+
+  public removeCard<T>(lists: List[], listId: string, cardId: string): List[] {
+    return lists.map((list) => {
+      const updateCards = list.cards.filter((card) => card.id !== cardId)
+      return list.id === listId ? list.setCards(updateCards) : list;
+    });
   }
 
   private remove<T>(items: T[], index: number): T[] {

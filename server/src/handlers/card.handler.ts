@@ -10,6 +10,7 @@ export class CardHandler extends SocketHandler {
     socket.on(CardEvent.REORDER, this.reorderCards.bind(this));
     socket.on(CardEvent.RENAME, this.renameCard.bind(this));
     socket.on(CardEvent.CHANGE_DESCRIPTION, this.changeDescription.bind(this));
+    socket.on(CardEvent.DELETE, this.removeCard.bind(this));
   }
 
   public createCard(listId: string, cardName: string): void {
@@ -54,6 +55,13 @@ export class CardHandler extends SocketHandler {
   private changeDescription(cardId: string, text: string): void {
     const lists = this.db.getData();
     const updatedLists = this.reorderService.changeDescription(lists, cardId, text)
+    this.db.setData(updatedLists);
+    this.updateLists();
+  }
+
+  private removeCard(listId:string, cardId: string): void {
+    const lists = this.db.getData();
+    const updatedLists = this.reorderService.removeCard(lists, listId, cardId)
     this.db.setData(updatedLists);
     this.updateLists();
   }
