@@ -6,9 +6,11 @@ import { DeleteButton } from '../primitives/delete-button';
 import { Splitter } from '../primitives/styled/splitter';
 import { Text } from '../primitives/text';
 import { Title } from '../primitives/title';
+import { socket } from "../../context/socket";
 import { Container } from './styled/container';
 import { Content } from './styled/content';
 import { Footer } from './styled/footer';
+import { CardEvent } from '../../common/enums';
 
 type Props = {
   card: Card;
@@ -17,6 +19,13 @@ type Props = {
 };
 
 export const CardItem = ({ card, isDragging, provided }: Props) => {
+  const handleRenameTitle = (newName:string) => {
+    socket.emit(CardEvent.RENAME, card.id, newName);
+  }
+
+  const handleChangeText = (text: string) => {
+    socket.emit(CardEvent.CHANGE_DESCRIPTION, card.id, text);
+  }
   return (
     <Container
       className="card-container"
@@ -30,12 +39,12 @@ export const CardItem = ({ card, isDragging, provided }: Props) => {
     >
       <Content>
         <Title
-          onChange={() => {}}
+          onChange={handleRenameTitle}
           title={card.name}
           fontSize="large"
           isBold
         />
-        <Text text={card.description} onChange={() => {}} />
+        <Text text={card.description} onChange={handleChangeText} />
         <Footer>
           <DeleteButton onClick={() => {}} />
           <Splitter />
