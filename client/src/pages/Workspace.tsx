@@ -65,7 +65,9 @@ export const Workspace = () => {
   };
 
   const handleCreateList = (listName: string) => {
-    socket.emit(ListEvent.CREATE, listName);
+    if(listName) {
+      socket.emit(ListEvent.CREATE, listName);
+    }
   };
 
   const handleRemoveList = (listId: string) => {
