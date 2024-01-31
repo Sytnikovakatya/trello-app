@@ -68,6 +68,10 @@ export const Workspace = () => {
     socket.emit(ListEvent.CREATE, listName);
   };
 
+  const handleRemoveList = (listId: string) => {
+    socket.emit(ListEvent.DELETE, listId);
+  }
+
   return (
     <React.Fragment>
       <DragDropContext onDragEnd={onDragEnd}>
@@ -85,6 +89,7 @@ export const Workspace = () => {
                   listName={list.name}
                   cards={list.cards}
                   listId={list.id}
+                  onRemoveList={handleRemoveList}
                 />
               ))}
               {provided.placeholder}
@@ -96,7 +101,3 @@ export const Workspace = () => {
     </React.Fragment>
   );
 };
-function randomUUID(): string {
-  throw new Error('Function not implemented.');
-}
-

@@ -9,6 +9,7 @@ export class ListHandler extends SocketHandler {
     socket.on(ListEvent.CREATE, this.createList.bind(this));
     socket.on(ListEvent.GET, this.getLists.bind(this));
     socket.on(ListEvent.REORDER, this.reorderLists.bind(this));
+    socket.on(ListEvent.DELETE, this.removeList.bind(this));
   }
 
   private getLists(callback: (cards: List[]) => void): void {
@@ -30,6 +31,13 @@ export class ListHandler extends SocketHandler {
     const lists = this.db.getData();
     const newList = new List(name);
     this.db.setData(lists.concat(newList));
+    this.updateLists();
+  }
+
+  private removeList(listId: string): void {
+    const lists = this.db.getData();
+    const updatedLists = this.reorderService.removeList(lists, listId);
+    this.db.setData(updatedLists);
     this.updateLists();
   }
 }

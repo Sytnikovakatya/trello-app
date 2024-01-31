@@ -19,13 +19,18 @@ type Props = {
   listName: string;
   cards: Card[];
   index: number;
+  onRemoveList: (listId:string)=>void;
 };
 
-export const Column = ({ listId, listName, cards, index }: Props) => {
+export const Column = ({ listId, listName, cards, index, onRemoveList }: Props) => {
   return (
     <Draggable draggableId={listId} index={index}>
       {(provided: DraggableProvided, snapshot: DraggableStateSnapshot) => (
-        <Container className="column-container" ref={provided.innerRef} {...provided.draggableProps}>
+        <Container
+          className="column-container"
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+        >
           <Header
             className="column-header"
             isDragging={snapshot.isDragging}
@@ -40,13 +45,13 @@ export const Column = ({ listId, listName, cards, index }: Props) => {
               isBold
             />
             <Splitter />
-            <DeleteButton color="#FFF0" onClick={() => {}} />
+            <DeleteButton color="#FFF0" onClick={() => onRemoveList(listId)} />
           </Header>
           <CardsList
             listId={listId}
             listType="CARD"
             style={{
-              backgroundColor: snapshot.isDragging ? colors.G50 : '',
+              backgroundColor: snapshot.isDragging ? colors.G50 : "",
             }}
             cards={cards}
           />

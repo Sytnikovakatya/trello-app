@@ -45,6 +45,10 @@ export class ReorderService {
     return newLists;
   }
 
+  public removeList<T>(lists: List[], listId: string): List[] {
+    return lists.filter((list) => list.id !== listId)
+  }
+
   private remove<T>(items: T[], index: number): T[] {
     return [...items.slice(0, index), ...items.slice(index + 1)];
   }
