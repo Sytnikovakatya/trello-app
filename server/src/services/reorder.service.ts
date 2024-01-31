@@ -49,6 +49,15 @@ export class ReorderService {
     return lists.filter((list) => list.id !== listId)
   }
 
+  public renameList<T>(lists: List[], listId: string, newName: string): List[] {
+    return lists.map((list) => {
+      if (list.id === listId) {
+        list.setName(newName);
+      }
+      return list;
+    });
+  }
+
   private remove<T>(items: T[], index: number): T[] {
     return [...items.slice(0, index), ...items.slice(index + 1)];
   }
