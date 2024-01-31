@@ -64,6 +64,10 @@ export const Workspace = () => {
     });
   };
 
+  const handleCreateList = (listName: string) => {
+    socket.emit(ListEvent.CREATE, listName);
+  };
+
   return (
     <React.Fragment>
       <DragDropContext onDragEnd={onDragEnd}>
@@ -84,7 +88,7 @@ export const Workspace = () => {
                 />
               ))}
               {provided.placeholder}
-              <ColumnCreator onCreateList={() => {}} />
+              <ColumnCreator onCreateList={handleCreateList} />
             </Container>
           )}
         </Droppable>
@@ -92,3 +96,7 @@ export const Workspace = () => {
     </React.Fragment>
   );
 };
+function randomUUID(): string {
+  throw new Error('Function not implemented.');
+}
+
