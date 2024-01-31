@@ -58,6 +58,12 @@ export class ReorderService {
     });
   }
 
+  public createCard<T>(lists: List[], listId: string, newCard: Card): List[] {
+    return lists.map((list) =>
+      list.id === listId ? list.setCards(list.cards.concat(newCard)) : list,
+    );
+  }
+
   private remove<T>(items: T[], index: number): T[] {
     return [...items.slice(0, index), ...items.slice(index + 1)];
   }
