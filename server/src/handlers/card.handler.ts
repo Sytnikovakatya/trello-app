@@ -2,6 +2,7 @@ import type { Socket } from 'socket.io';
 
 import { CardEvent } from '../common/enums';
 import { Card } from '../data/models/card';
+import { List } from '../data/models/list';
 import { SocketHandler } from './socket.handler';
 
 export class CardHandler extends SocketHandler {
@@ -17,10 +18,8 @@ export class CardHandler extends SocketHandler {
   public createCard(listId: string, cardName: string): void {
     const newCard = new Card(cardName, '');
     const lists = this.db.getData();
-
     const updatedLists = this.reorderService.createCard(lists, listId, newCard);
-    this.db.setData(updatedLists);
-    this.updateLists();
+    this.updateListsAndData(updatedLists);
   }
 
   private reorderCards({
@@ -42,15 +41,13 @@ export class CardHandler extends SocketHandler {
       sourceListId,
       destinationListId
     });
-    this.db.setData(reordered);
-    this.updateLists();
+    this.updateListsAndData(reordered);
   }
 
   private renameCard(cardId: string, newName: string): void {
     const lists = this.db.getData();
     const updatedLists = this.reorderService.renameCard(lists, cardId, newName);
-    this.db.setData(updatedLists);
-    this.updateLists();
+    this.updateListsAndData(updatedLists);
   }
 
   private changeDescription(cardId: string, text: string): void {
@@ -60,21 +57,23 @@ export class CardHandler extends SocketHandler {
       cardId,
       text
     );
-    this.db.setData(updatedLists);
-    this.updateLists();
+    this.updateListsAndData(updatedLists);
   }
 
   private removeCard(listId: string, cardId: string): void {
     const lists = this.db.getData();
     const updatedLists = this.reorderService.removeCard(lists, listId, cardId);
-    this.db.setData(updatedLists);
-    this.updateLists();
+    this.updateListsAndData(updatedLists);
   }
 
   private duplicateCard(cardId: string): void {
     const lists = this.db.getData();
     const duplicatedCard = this.reorderService.duplicateCard(lists, cardId);
-    this.db.setData(duplicatedCard);
+    this.updateListsAndData(duplicatedCard);
+  }
+
+  private updateListsAndData(updatedLists: List[]): void {
+    this.db.setData(updatedLists);
     this.updateLists();
   }
 }

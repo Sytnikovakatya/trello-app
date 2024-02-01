@@ -69,23 +69,35 @@ export class ReorderService {
     );
   }
 
-  public updateCardProperty(lists: List[], cardId: string, updater: (card: Card) => void): List[] {
+  public updateCardProperty(
+    lists: List[],
+    cardId: string,
+    updater: (card: Card) => void
+  ): List[] {
     return lists.map(list => {
-        list.cards.forEach(card => {
-            if (card.id === cardId) {
-                updater(card);
-            }
-        });
-        return list;
+      list.cards.forEach(card => {
+        if (card.id === cardId) {
+          updater(card);
+        }
+      });
+      return list;
     });
   }
 
   public renameCard(lists: List[], cardId: string, newName: string): List[] {
-    return this.updateCardProperty(lists, cardId, (card) => card.setName(newName));
+    return this.updateCardProperty(lists, cardId, card =>
+      card.setName(newName)
+    );
   }
 
-  public changeDescription(lists: List[], cardId: string, text: string): List[] {
-   return this.updateCardProperty(lists, cardId, (card) => card.setDescription(text));
+  public changeDescription(
+    lists: List[],
+    cardId: string,
+    text: string
+  ): List[] {
+    return this.updateCardProperty(lists, cardId, card =>
+      card.setDescription(text)
+    );
   }
 
   public removeCard(lists: List[], listId: string, cardId: string): List[] {

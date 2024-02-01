@@ -24,27 +24,29 @@ export class ListHandler extends SocketHandler {
       sourceIndex,
       destinationIndex
     );
-    this.db.setData(reorderedLists);
-    this.updateLists();
+    this.updateListsAndData(reorderedLists);
   }
 
   private createList(name: string): void {
     const lists = this.db.getData();
     const newList = new List(name);
-    this.db.setData(lists.concat(newList));
-    this.updateLists();
+    const updatedLists = lists.concat(newList);
+    this.updateListsAndData(updatedLists);
   }
 
   private removeList(listId: string): void {
     const lists = this.db.getData();
     const updatedLists = this.reorderService.removeList(lists, listId);
-    this.db.setData(updatedLists);
-    this.updateLists();
+    this.updateListsAndData(updatedLists);
   }
 
   private renameList(listId: string, newName: string): void {
     const lists = this.db.getData();
     const updatedLists = this.reorderService.renameList(lists, listId, newName);
+    this.updateListsAndData(updatedLists);
+  }
+
+  private updateListsAndData(updatedLists: List[]): void {
     this.db.setData(updatedLists);
     this.updateLists();
   }
