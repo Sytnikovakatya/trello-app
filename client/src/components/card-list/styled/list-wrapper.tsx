@@ -6,7 +6,7 @@ import { SPACE_IN_PX } from '../../../common/constants';
 
 const getBackgroundColor = (
   isDraggingOver: boolean,
-  isDraggingFrom: boolean,
+  isDraggingFrom: boolean
 ): string => {
   if (isDraggingOver) {
     return colors.R50;
@@ -25,7 +25,7 @@ type Props = DroppableProvidedProps & {
 };
 
 const ListWrapper = styled.div<Props>`
-  background-color: ${(props) =>
+  background-color: ${props =>
     getBackgroundColor(props.isDraggingOver, props.isDraggingFrom)};
   display: flex;
   flex-direction: column;
@@ -33,7 +33,9 @@ const ListWrapper = styled.div<Props>`
   padding: ${SPACE_IN_PX}px;
   border: ${SPACE_IN_PX}px;
   padding-bottom: 0;
-  transition: background-color 0.2s ease, opacity 0.1s ease;
+  transition:
+    background-color 0.2s ease,
+    opacity 0.1s ease;
   user-select: none;
   width: 300px;
 `;

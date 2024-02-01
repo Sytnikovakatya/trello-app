@@ -13,7 +13,7 @@ const iconNameToComponent: Record<
 > = {
   add: Add,
   copy: Copy,
-  delete: Delete,
+  delete: Delete
 };
 
 const Icon: React.FC<Props> = ({ iconName }) => {

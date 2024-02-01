@@ -1,0 +1,43 @@
+root: true
+env:
+  browser: true
+  es2021: true
+parser: "@typescript-eslint/parser"
+extends:
+  - "eslint:recommended"
+  - "plugin:@typescript-eslint/recommended"
+  - "plugin:prettier/recommended"
+plugins:
+  - "@typescript-eslint"
+  - "prettier"
+rules:
+  no-console:
+    - off
+  max-params:
+    - error
+    - 3
+  indent:
+    - error
+    - 2
+  max-len:
+    - error
+    - code: 100   
+  no-multiple-empty-lines:
+    - error
+    - max: 1
+  curly:
+    - error
+    - all
+  no-unused-vars:
+    - off
+  quotes:
+    - error
+    - single
+  object-curly-spacing:
+    - error
+    - always
+overrides:
+  - files:
+      - '**/mockData.ts'
+    rules:
+      max-len: 'off'    

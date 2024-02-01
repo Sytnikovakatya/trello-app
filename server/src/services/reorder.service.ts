@@ -10,12 +10,16 @@ export class ReorderService {
     return result;
   }
 
+  public insertCardToList(cards: Card[], index: number, card: Card): Card[] {
+    return [...cards.slice(0, index), card, ...cards.slice(index)];
+  }
+
   public reorderCards({
     lists,
     sourceIndex,
     destinationIndex,
     sourceListId,
-    destinationListId,
+    destinationListId
   }: {
     lists: List[];
     sourceIndex: number;
@@ -23,14 +27,15 @@ export class ReorderService {
     sourceListId: string;
     destinationListId: string;
   }): List[] {
-    const target: Card = lists.find((list) => list.id === sourceListId)
-      ?.cards?.[sourceIndex];
+    const target: Card = lists.find(list => list.id === sourceListId)?.cards?.[
+      sourceIndex
+    ];
 
     if (!target) {
       return lists;
     }
 
-    const newLists = lists.map((list) => {
+    const newLists = lists.map(list => {
       if (list.id === sourceListId) {
         list.setCards(this.remove(list.cards, sourceIndex));
       }
@@ -43,6 +48,75 @@ export class ReorderService {
     });
 
     return newLists;
+  }
+
+  public removeList(lists: List[], listId: string): List[] {
+    return lists.filter(list => list.id !== listId);
+  }
+
+  public renameList(lists: List[], listId: string, newName: string): List[] {
+    return lists.map(list => {
+      if (list.id === listId) {
+        list.setName(newName);
+      }
+      return list;
+    });
+  }
+
+  public createCard(lists: List[], listId: string, newCard: Card): List[] {
+    return lists.map(list =>
+      list.id === listId ? list.setCards(list.cards.concat(newCard)) : list
+    );
+  }
+
+  public updateCardProperty(
+    lists: List[],
+    cardId: string,
+    updater: (card: Card) => void
+  ): List[] {
+    return lists.map(list => {
+      list.cards.forEach(card => {
+        if (card.id === cardId) {
+          updater(card);
+        }
+      });
+      return list;
+    });
+  }
+
+  public renameCard(lists: List[], cardId: string, newName: string): List[] {
+    return this.updateCardProperty(lists, cardId, card =>
+      card.setName(newName)
+    );
+  }
+
+  public changeDescription(
+    lists: List[],
+    cardId: string,
+    text: string
+  ): List[] {
+    return this.updateCardProperty(lists, cardId, card =>
+      card.setDescription(text)
+    );
+  }
+
+  public removeCard(lists: List[], listId: string, cardId: string): List[] {
+    return lists.map(list => {
+      const updateCards = list.cards.filter(card => card.id !== cardId);
+      return list.id === listId ? list.setCards(updateCards) : list;
+    });
+  }
+
+  public duplicateCard(lists: List[], cardId: string): List[] {
+    return lists.map(list => {
+      list.cards.map(card => {
+        if (card.id === cardId) {
+          const clonedCard = card.clone();
+          list.setCards([...list.cards, clonedCard]);
+        }
+      });
+      return list;
+    });
   }
 
   private remove<T>(items: T[], index: number): T[] {

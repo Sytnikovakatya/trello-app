@@ -14,7 +14,7 @@ const Container = styled.a<Props>`
     isDragging ? colors.N60A : 'transparent'};
   background-color: ${({ isDragging }) =>
     isDragging ? colors.Y50 : colors.N0};
-  box-shadow: ${(props) =>
+  box-shadow: ${props =>
     props.isDragging ? `2px 2px 1px ${colors.N70}` : 'none'};
   box-sizing: border-box;
   padding: ${SPACE_IN_PX}px;
