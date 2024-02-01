@@ -10,6 +10,10 @@ export class ReorderService {
     return result;
   }
 
+  public insertCardToList(cards: Card[], index: number, card: Card): Card[] {
+    return [...cards.slice(0, index), card, ...cards.slice(index)];
+  }
+
   public reorderCards({
     lists,
     sourceIndex,
@@ -65,26 +69,23 @@ export class ReorderService {
     );
   }
 
-  public renameCard(lists: List[], cardId: string, newName: string): List[] {
+  public updateCardProperty(lists: List[], cardId: string, updater: (card: Card) => void): List[] {
     return lists.map(list => {
-      list.cards.forEach(card => {
-        card.id === cardId ? card.setName(newName) : card;
-      });
-      return list;
+        list.cards.forEach(card => {
+            if (card.id === cardId) {
+                updater(card);
+            }
+        });
+        return list;
     });
   }
 
-  public changeDescription(
-    lists: List[],
-    cardId: string,
-    text: string
-  ): List[] {
-    return lists.map(list => {
-      list.cards.forEach(card => {
-        card.id === cardId ? card.setDescription(text) : card;
-      });
-      return list;
-    });
+  public renameCard(lists: List[], cardId: string, newName: string): List[] {
+    return this.updateCardProperty(lists, cardId, (card) => card.setName(newName));
+  }
+
+  public changeDescription(lists: List[], cardId: string, text: string): List[] {
+   return this.updateCardProperty(lists, cardId, (card) => card.setDescription(text));
   }
 
   public removeCard(lists: List[], listId: string, cardId: string): List[] {
