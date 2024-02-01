@@ -36,6 +36,7 @@ npm start -w client
 ```
 npm run format
 ``` 
+
 2. Run the command at the root to find problems in your JS code
 
 ```
