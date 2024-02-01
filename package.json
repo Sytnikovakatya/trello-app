@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "Starter for Patterns Practises and Principles homework. Binary Studio Academy",
   "scripts": {
-    "prettify": "prettier --write \"**/*.{ts,tsx,scss,json,md,html}\"",
+    "format": "prettier --write \"**/*.{ts,tsx,scss,json,md,html}\"",
     "lint:client": "eslint --fix client/src/**/*.{tsx,ts}",
     "lint:server": "eslint --fix server/src/**/*.ts",
     "lint": "npm run lint:client && npm run lint:server"
