@@ -5,10 +5,10 @@ import { Card } from '../data/models/card';
 import { List } from '../data/models/list';
 import { SocketHandler } from './socket.handler';
 import { Logger, FileLogger, ErrorConsoleLogger } from '../loggers/loggers';
+import { proxy as reorderServiceProxi } from '../loggers/reorder-service-proxy';
 import { Database } from '../data/database';
 import { ReorderService } from '../services/reorder.service';
 
-// PATTERN:Observer
 export class CardHandler extends SocketHandler {
   private logger: Logger;
 
@@ -32,7 +32,7 @@ export class CardHandler extends SocketHandler {
     const newCard = new Card(cardName, '');
     const lists = this.db.getData();
     try {
-      const updatedLists = this.reorderService.createCard(
+      const updatedLists = reorderServiceProxi.createCard(
         lists,
         listId,
         newCard
@@ -57,7 +57,7 @@ export class CardHandler extends SocketHandler {
   }): void {
     try {
       const lists = this.db.getData();
-      const reordered = this.reorderService.reorderCards({
+      const reordered = reorderServiceProxi.reorderCards({
         lists,
         sourceIndex,
         destinationIndex,
@@ -74,7 +74,7 @@ export class CardHandler extends SocketHandler {
   private renameCard(cardId: string, newName: string): void {
     try {
       const lists = this.db.getData();
-      const updatedLists = this.reorderService.renameCard(
+      const updatedLists = reorderServiceProxi.renameCard(
         lists,
         cardId,
         newName
@@ -89,7 +89,7 @@ export class CardHandler extends SocketHandler {
   private changeDescription(cardId: string, text: string): void {
     try {
       const lists = this.db.getData();
-      const updatedLists = this.reorderService.changeDescription(
+      const updatedLists = reorderServiceProxi.changeDescription(
         lists,
         cardId,
         text
@@ -104,7 +104,7 @@ export class CardHandler extends SocketHandler {
   private removeCard(listId: string, cardId: string): void {
     try {
       const lists = this.db.getData();
-      const updatedLists = this.reorderService.removeCard(
+      const updatedLists = reorderServiceProxi.removeCard(
         lists,
         listId,
         cardId
@@ -119,7 +119,7 @@ export class CardHandler extends SocketHandler {
   private duplicateCard(cardId: string): void {
     try {
       const lists = this.db.getData();
-      const duplicatedCard = this.reorderService.duplicateCard(lists, cardId);
+      const duplicatedCard = reorderServiceProxi.duplicateCard(lists, cardId);
       this.updateListsAndData(duplicatedCard);
       this.logger.log(`Duplicating card with ID: ${cardId}`);
     } catch (error) {

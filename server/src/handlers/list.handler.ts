@@ -4,6 +4,7 @@ import { ListEvent } from '../common/enums';
 import { List } from '../data/models/list';
 import { SocketHandler } from './socket.handler';
 import { Logger, FileLogger, ErrorConsoleLogger } from '../loggers/loggers';
+import { proxy as reorderServiceProxi } from '../loggers/reorder-service-proxy';
 import { Database } from '../data/database';
 import { ReorderService } from '../services/reorder.service';
 
@@ -32,7 +33,7 @@ export class ListHandler extends SocketHandler {
   private reorderLists(sourceIndex: number, destinationIndex: number): void {
     try {
       const lists = this.db.getData();
-      const reorderedLists = this.reorderService.reorder(
+      const reorderedLists = reorderServiceProxi.reorder(
         lists,
         sourceIndex,
         destinationIndex
@@ -59,7 +60,7 @@ export class ListHandler extends SocketHandler {
   private removeList(listId: string): void {
     try {
       const lists = this.db.getData();
-      const updatedLists = this.reorderService.removeList(lists, listId);
+      const updatedLists = reorderServiceProxi.removeList(lists, listId);
       this.updateListsAndData(updatedLists);
       this.logger.log(`Removing list with ID: ${listId}`);
     } catch (error) {
@@ -70,7 +71,7 @@ export class ListHandler extends SocketHandler {
   private renameList(listId: string, newName: string): void {
     try {
       const lists = this.db.getData();
-      const updatedLists = this.reorderService.renameList(
+      const updatedLists = reorderServiceProxi.renameList(
         lists,
         listId,
         newName
