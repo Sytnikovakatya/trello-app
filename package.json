@@ -19,6 +19,7 @@
     "npm": ">=8 <9"
   },
   "devDependencies": {
+    "@types/ramda": "^0.29.10",
     "@typescript-eslint/eslint-plugin": "^6.20.0",
     "eslint": "^8.2.0",
     "eslint-config-airbnb-base": "^15.0.0",
@@ -31,6 +32,7 @@
   },
   "dependencies": {
     "@emotion/react": "^11.11.3",
-    "@typescript-eslint/parser": "^6.20.0"
+    "@typescript-eslint/parser": "^6.20.0",
+    "ramda": "^0.29.1"
   }
 }
