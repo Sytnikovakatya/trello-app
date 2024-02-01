@@ -15,7 +15,7 @@ export class ReorderService {
     sourceIndex,
     destinationIndex,
     sourceListId,
-    destinationListId,
+    destinationListId
   }: {
     lists: List[];
     sourceIndex: number;
@@ -23,14 +23,15 @@ export class ReorderService {
     sourceListId: string;
     destinationListId: string;
   }): List[] {
-    const target: Card = lists.find((list) => list.id === sourceListId)
-      ?.cards?.[sourceIndex];
+    const target: Card = lists.find(list => list.id === sourceListId)?.cards?.[
+      sourceIndex
+    ];
 
     if (!target) {
       return lists;
     }
 
-    const newLists = lists.map((list) => {
+    const newLists = lists.map(list => {
       if (list.id === sourceListId) {
         list.setCards(this.remove(list.cards, sourceIndex));
       }
@@ -45,12 +46,12 @@ export class ReorderService {
     return newLists;
   }
 
-  public removeList<T>(lists: List[], listId: string): List[] {
-    return lists.filter((list) => list.id !== listId)
+  public removeList(lists: List[], listId: string): List[] {
+    return lists.filter(list => list.id !== listId);
   }
 
-  public renameList<T>(lists: List[], listId: string, newName: string): List[] {
-    return lists.map((list) => {
+  public renameList(lists: List[], listId: string, newName: string): List[] {
+    return lists.map(list => {
       if (list.id === listId) {
         list.setName(newName);
       }
@@ -58,34 +59,50 @@ export class ReorderService {
     });
   }
 
-  public createCard<T>(lists: List[], listId: string, newCard: Card): List[] {
-    return lists.map((list) =>
-      list.id === listId ? list.setCards(list.cards.concat(newCard)) : list,
+  public createCard(lists: List[], listId: string, newCard: Card): List[] {
+    return lists.map(list =>
+      list.id === listId ? list.setCards(list.cards.concat(newCard)) : list
     );
   }
 
-  public renameCard<T>(lists: List[], cardId: string, newName: string):List[] {
+  public renameCard(lists: List[], cardId: string, newName: string): List[] {
     return lists.map(list => {
-       list.cards.forEach(card => {
-        card.id === cardId ? card.setName(newName) : card
+      list.cards.forEach(card => {
+        card.id === cardId ? card.setName(newName) : card;
       });
-      return list
-    })
+      return list;
+    });
   }
 
-  public changeDescription<T>(lists: List[], cardId: string, text: string): List[] {
+  public changeDescription(
+    lists: List[],
+    cardId: string,
+    text: string
+  ): List[] {
     return lists.map(list => {
-       list.cards.forEach(card => {
-        card.id === cardId ? card.setDescription(text) : card
+      list.cards.forEach(card => {
+        card.id === cardId ? card.setDescription(text) : card;
       });
-      return list
-    })
+      return list;
+    });
   }
 
-  public removeCard<T>(lists: List[], listId: string, cardId: string): List[] {
-    return lists.map((list) => {
-      const updateCards = list.cards.filter((card) => card.id !== cardId)
+  public removeCard(lists: List[], listId: string, cardId: string): List[] {
+    return lists.map(list => {
+      const updateCards = list.cards.filter(card => card.id !== cardId);
       return list.id === listId ? list.setCards(updateCards) : list;
+    });
+  }
+
+  public duplicateCard(lists: List[], cardId: string): List[] {
+    return lists.map(list => {
+      list.cards.map(card => {
+        if (card.id === cardId) {
+          const clonedCard = card.clone();
+          list.setCards([...list.cards, clonedCard]);
+        }
+      });
+      return list;
     });
   }
 

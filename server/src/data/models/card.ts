@@ -1,6 +1,11 @@
 import { randomUUID } from 'crypto';
 
-class Card {
+// PATTERN:Prototype
+interface Cloneable {
+  clone(): Cloneable;
+}
+
+class Card implements Cloneable {
   public id: string;
 
   public name: string;
@@ -22,6 +27,10 @@ class Card {
 
   public setDescription(description: string): void {
     this.description = description;
+  }
+
+  public clone(): Card {
+    return new Card(this.name, this.description);
   }
 }
 
