@@ -31,11 +31,13 @@ npm start -w client
 ```
 
 ## Code style
-1. Run the next command at the root to fix code style
- ```
- npm run format
- ``` 
-2. Run the next command at the root to find problems in your JS code
+1. Run the command at the root to fix code style
+
+```
+npm run format
+``` 
+2. Run the command at the root to find problems in your JS code
+
 ```
 npm run lint 
 ```
