@@ -29,3 +29,8 @@ npm start -w server
 ```
 npm start -w client
 ```
+
+## Code style
+1. Run ```npm run format at the root to fix code style
+2. Run ```npm run lint at the root to find problems in your JS code
+
