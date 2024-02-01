@@ -1,18 +1,18 @@
 import { colors } from '@atlaskit/theme';
 import type {
   DraggableProvided,
-  DraggableStateSnapshot,
+  DraggableStateSnapshot
 } from '@hello-pangea/dnd';
 import { Draggable } from '@hello-pangea/dnd';
 
-import { CardEvent, ListEvent } from "../../common/enums";
+import { CardEvent, ListEvent } from '../../common/enums';
 import type { Card } from '../../common/types';
 import { CardsList } from '../card-list/card-list';
 import { DeleteButton } from '../primitives/delete-button';
 import { Splitter } from '../primitives/styled/splitter';
 import { Title } from '../primitives/title';
 import { Footer } from './components/footer';
-import { socket } from "../../context/socket";
+import { socket } from '../../context/socket';
 import { Container } from './styled/container';
 import { Header } from './styled/header';
 
@@ -21,19 +21,25 @@ type Props = {
   listName: string;
   cards: Card[];
   index: number;
-  onRemoveList: (listId:string)=>void;
+  onRemoveList: (listId: string) => void;
 };
 
-export const Column = ({ listId, listName, cards, index, onRemoveList }: Props) => {
-  const handleRenameList = (newName: string): void =>{
+export const Column = ({
+  listId,
+  listName,
+  cards,
+  index,
+  onRemoveList
+}: Props) => {
+  const handleRenameList = (newName: string): void => {
     socket.emit(ListEvent.RENAME, listId, newName);
-  }
+  };
 
   const handleCreateCard = (cardName: string): void => {
-    if(cardName){
+    if (cardName) {
       socket.emit(CardEvent.CREATE, listId, cardName);
     }
-  }
+  };
 
   return (
     <Draggable draggableId={listId} index={index}>
@@ -63,7 +69,7 @@ export const Column = ({ listId, listName, cards, index, onRemoveList }: Props) 
             listId={listId}
             listType="CARD"
             style={{
-              backgroundColor: snapshot.isDragging ? colors.G50 : "",
+              backgroundColor: snapshot.isDragging ? colors.G50 : ''
             }}
             cards={cards}
           />

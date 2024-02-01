@@ -6,7 +6,7 @@ import { TitleContainer } from './styled/title-container';
 import { TitleInput } from './styled/title-input';
 
 type Props = {
-  fontSize: "x-large" | "large" | "medium";
+  fontSize: 'x-large' | 'large' | 'medium';
   isBold?: boolean;
   title: string;
   width?: number;

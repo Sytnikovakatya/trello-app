@@ -20,7 +20,7 @@ const CreatorInput = ({ onSubmit }: Props) => {
       <Input
         className="creator-input"
         value={name}
-        onChange={(e) => setName(e.target.value)}
+        onChange={e => setName(e.target.value)}
         fontSize="medium"
         width={250}
       />

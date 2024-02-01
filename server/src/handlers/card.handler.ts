@@ -26,7 +26,7 @@ export class CardHandler extends SocketHandler {
     sourceIndex,
     destinationIndex,
     sourceListId,
-    destinationListId,
+    destinationListId
   }: {
     sourceIndex: number;
     destinationIndex: number;
@@ -39,7 +39,7 @@ export class CardHandler extends SocketHandler {
       sourceIndex,
       destinationIndex,
       sourceListId,
-      destinationListId,
+      destinationListId
     });
     this.db.setData(reordered);
     this.updateLists();
@@ -47,21 +47,25 @@ export class CardHandler extends SocketHandler {
 
   private renameCard(cardId: string, newName: string): void {
     const lists = this.db.getData();
-    const updatedLists = this.reorderService.renameCard(lists, cardId, newName)
-    this.db.setData(updatedLists);
-    this.updateLists();
-  }
-  
-  private changeDescription(cardId: string, text: string): void {
-    const lists = this.db.getData();
-    const updatedLists = this.reorderService.changeDescription(lists, cardId, text)
+    const updatedLists = this.reorderService.renameCard(lists, cardId, newName);
     this.db.setData(updatedLists);
     this.updateLists();
   }
 
-  private removeCard(listId:string, cardId: string): void {
+  private changeDescription(cardId: string, text: string): void {
     const lists = this.db.getData();
-    const updatedLists = this.reorderService.removeCard(lists, listId, cardId)
+    const updatedLists = this.reorderService.changeDescription(
+      lists,
+      cardId,
+      text
+    );
+    this.db.setData(updatedLists);
+    this.updateLists();
+  }
+
+  private removeCard(listId: string, cardId: string): void {
+    const lists = this.db.getData();
+    const updatedLists = this.reorderService.removeCard(lists, listId, cardId);
     this.db.setData(updatedLists);
     this.updateLists();
   }

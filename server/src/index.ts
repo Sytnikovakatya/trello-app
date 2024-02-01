@@ -12,15 +12,15 @@ const PORT = 3003;
 const httpServer = createServer();
 const io = new Server(httpServer, {
   cors: {
-    origin: "*",
-    methods: ["GET", "POST"],
-  },
+    origin: '*',
+    methods: ['GET', 'POST']
+  }
 });
 
 const db = Database.Instance;
 const reorderService = new ReorderService();
 
-if (process.env.NODE_ENV !== "production") {
+if (process.env.NODE_ENV !== 'production') {
   db.setData(lists);
 }
 
@@ -29,7 +29,7 @@ const onConnection = (socket: Socket): void => {
   new CardHandler(io, db, reorderService).handleConnection(socket);
 };
 
-io.on("connection", onConnection);
+io.on('connection', onConnection);
 
 httpServer.listen(PORT, () => console.log(`Listening on port: ${PORT}`));
 

@@ -1,6 +1,6 @@
 import type {
   DraggableProvided,
-  DraggableStateSnapshot,
+  DraggableStateSnapshot
 } from '@hello-pangea/dnd';
 import { Draggable } from '@hello-pangea/dnd';
 import React from 'react';
@@ -17,10 +17,10 @@ type Props = {
 
 const Cards = ({ cards, listId }: Props) => (
   <React.Fragment>
-    {cards.map((card: Card, index: number) =>  {
+    {cards.map((card: Card, index: number) => {
       const handleRemoveCard = () => {
-        socket.emit(CardEvent.DELETE, listId, card.id)
-      }
+        socket.emit(CardEvent.DELETE, listId, card.id);
+      };
       return (
         <Draggable key={card.id} draggableId={card.id} index={index}>
           {(

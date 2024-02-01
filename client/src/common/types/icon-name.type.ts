@@ -1,3 +1,3 @@
-type IconName = "add" | "copy" | "delete";
+type IconName = 'add' | 'copy' | 'delete';
 
 export type { IconName };

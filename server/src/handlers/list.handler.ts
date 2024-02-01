@@ -22,7 +22,7 @@ export class ListHandler extends SocketHandler {
     const reorderedLists = this.reorderService.reorder(
       lists,
       sourceIndex,
-      destinationIndex,
+      destinationIndex
     );
     this.db.setData(reorderedLists);
     this.updateLists();
@@ -44,7 +44,7 @@ export class ListHandler extends SocketHandler {
 
   private renameList(listId: string, newName: string): void {
     const lists = this.db.getData();
-    const updatedLists = this.reorderService.renameList(lists, listId, newName)
+    const updatedLists = this.reorderService.renameList(lists, listId, newName);
     this.db.setData(updatedLists);
     this.updateLists();
   }

@@ -1,6 +1,6 @@
 import type {
   DroppableProvided,
-  DroppableStateSnapshot,
+  DroppableStateSnapshot
 } from '@hello-pangea/dnd';
 import { Droppable } from '@hello-pangea/dnd';
 import { CSSProperties } from 'react';

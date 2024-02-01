@@ -1,7 +1,7 @@
 import type {
   DraggableLocation,
   DroppableProvided,
-  DropResult,
+  DropResult
 } from '@hello-pangea/dnd';
 import { DragDropContext, Droppable } from '@hello-pangea/dnd';
 import React, { useContext, useEffect, useState } from 'react';
@@ -48,7 +48,7 @@ export const Workspace = () => {
 
     if (isReorderLists) {
       setLists(
-        reorderService.reorderLists(lists, source.index, destination.index),
+        reorderService.reorderLists(lists, source.index, destination.index)
       );
       socket.emit(ListEvent.REORDER, source.index, destination.index);
 
@@ -60,19 +60,19 @@ export const Workspace = () => {
       sourceListId: source.droppableId,
       destinationListId: destination.droppableId,
       sourceIndex: source.index,
-      destinationIndex: destination.index,
+      destinationIndex: destination.index
     });
   };
 
   const handleCreateList = (listName: string) => {
-    if(listName) {
+    if (listName) {
       socket.emit(ListEvent.CREATE, listName);
     }
   };
 
   const handleRemoveList = (listId: string) => {
     socket.emit(ListEvent.DELETE, listId);
-  }
+  };
 
   return (
     <React.Fragment>

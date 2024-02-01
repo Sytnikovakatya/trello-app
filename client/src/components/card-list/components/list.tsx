@@ -10,11 +10,11 @@ type Props = {
   listId: string;
 };
 
-const List = ({ cards, dropProvided,  listId}: Props) => {
+const List = ({ cards, dropProvided, listId }: Props) => {
   return (
     <div className="list-container">
       <DropZone ref={dropProvided.innerRef}>
-        <Cards cards={cards} listId={listId}/>
+        <Cards cards={cards} listId={listId} />
         {dropProvided.placeholder}
       </DropZone>
     </div>
