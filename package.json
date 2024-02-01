@@ -6,7 +6,8 @@
     "format": "prettier --write \"**/*.{ts,tsx,scss,json,md,html}\"",
     "lint:client": "eslint --fix client/src/**/*.{tsx,ts}",
     "lint:server": "eslint --fix server/src/**/*.ts",
-    "lint": "npm run lint:client && npm run lint:server"
+    "lint": "npm run lint:client && npm run lint:server",
+    "start": "npm start -w client && npm start -w server"
   },
   "author": "Vitalii Yarmus",
   "license": "MIT",
