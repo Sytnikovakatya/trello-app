@@ -7,7 +7,7 @@
     "lint:client": "eslint --fix client/src/**/*.{tsx,ts}",
     "lint:server": "eslint --fix server/src/**/*.ts",
     "lint": "npm run lint:client && npm run lint:server",
-    "start": "npm start -w server && npm run start -w client"
+    "start": "cd server && npm start && cd ../client && npm start"
   },
   "author": "Vitalii Yarmus",
   "license": "MIT",
