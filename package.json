@@ -7,9 +7,9 @@
     "lint:client": "eslint --fix client/src/**/*.{tsx,ts}",
     "lint:server": "eslint --fix server/src/**/*.ts",
     "lint": "npm run lint:client && npm run lint:server",
-    "start:server": "cd server && npm run start",
-    "start:client": "cd client && npm run start",
-    "start": "npm run start:server && npm run start:client"
+   "start:server": "npm start -w server",
+    "start:client": "npm start -w client",
+    "start": "concurrently \"npm run start:server\" \"npm run start:client\""
   },
   "author": "Vitalii Yarmus",
   "license": "MIT",
@@ -24,6 +24,7 @@
   "devDependencies": {
     "@types/ramda": "^0.29.10",
     "@typescript-eslint/eslint-plugin": "^6.20.0",
+    "concurrently": "^8.2.2",
     "eslint": "^8.2.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^9.1.0",
